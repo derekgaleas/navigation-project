@@ -1,13 +1,30 @@
-import { MEALS } from "../data/dummy-data";
+import { useLayoutEffect } from "react";
+import { MEALS, CATEGORIES } from "../data/dummy-data";
 import { View, StyleSheet, FlatList } from "react-native";
 import MealItem from "../components/MealItem";
 
-function MealsOverviewScreen({ route }) {
+function MealsOverviewScreen({ route, navigation }) {
   const categoryId = route.params.categoryId;
 
   const displayedMeals = MEALS.filter(
     (meal) => meal.categoryIds.indexOf(categoryId) >= 0
   );
+
+  function onPressHandler(id) {
+    navigation.navigate("MealDetails", {
+      mealId: id,
+    });
+  }
+
+  useLayoutEffect(() => {
+    const categoryTitle = CATEGORIES.find(
+      (category) => category.id === categoryId
+    ).title;
+
+    navigation.setOptions({
+      title: categoryTitle,
+    });
+  }, [categoryId, navigation]);
 
   function renderMealItem(item) {
     return (
@@ -17,6 +34,7 @@ function MealsOverviewScreen({ route }) {
         duration={item.item.duration}
         complexity={item.item.complexity}
         affordability={item.item.affordability}
+        onPress={() => onPressHandler(item.item.id)}
       />
     );
   }
