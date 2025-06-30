@@ -29,7 +29,10 @@ export default function Index() {
           }}
         />
         <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
-        <Stack.Screen name="MealDetails" component={MealDetailScreen} />
+        <Stack.Screen
+          name="MealDetails"
+          component={MealDetailScreen}
+        />
       </Stack.Navigator>
     </View>
   );
