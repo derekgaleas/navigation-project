@@ -7,6 +7,7 @@ import MealDetailScreen from "../screens/MealDetailScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import { Ionicons } from "@expo/vector-icons";
+import FavoritesContextProvider from "../store/context/favorite-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -56,26 +57,28 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: "#351401" },
-          headerTintColor: "white",
-          headerTitleStyle: { fontWeight: "bold" },
-          headerTitleAlign: "center",
-          contentStyle: { backgroundColor: "#3f2f25" },
-          headerBackTitle: "Back",
-        }}
-      >
-        <Stack.Screen
-          name="MealsCategories"
-          component={DrawerNavigator}
-          options={{
-            headerShown: false,
+      <FavoritesContextProvider>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: "#351401" },
+            headerTintColor: "white",
+            headerTitleStyle: { fontWeight: "bold" },
+            headerTitleAlign: "center",
+            contentStyle: { backgroundColor: "#3f2f25" },
+            headerBackTitle: "Back",
           }}
-        />
-        <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
-        <Stack.Screen name="MealDetails" component={MealDetailScreen} />
-      </Stack.Navigator>
+        >
+          <Stack.Screen
+            name="MealsCategories"
+            component={DrawerNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
+          <Stack.Screen name="MealDetails" component={MealDetailScreen} />
+        </Stack.Navigator>
+      </FavoritesContextProvider>
     </View>
   );
 }
