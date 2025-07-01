@@ -1,12 +1,12 @@
 import {
-  View,
-  Text,
-  Pressable,
   Image,
-  StyleSheet,
   Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
-import MealDerails from "./MealDetails";
+import MealDerails from "../MealDetails";
 
 function MealItem({
   title,

@@ -1,10 +1,26 @@
-import { View, Text, StyleSheet } from 'react-native';
+import MealsList from "@/components/MealsList/MealsList";
+import { MEALS } from "@/data/dummy-data";
+import { FavoritesContext } from "@/store/context/favorite-context";
+import { useContext } from "react";
+import { View, Text, StyleSheet } from "react-native";
 
-function FavoritesScreen() {
-  return (
+function FavoritesScreen({ navigation }) {
+  const favoriteMealsCtx = useContext(FavoritesContext);
+  const favoriteMeals = MEALS.filter((meal) =>
+    favoriteMealsCtx.ids.includes(meal.id)
+  );
+
+  function onPressHandler(id) {
+    navigation.navigate("MealDetails", {
+      mealId: id,
+    });
+  }
+
+  return favoriteMeals.length > 0 ? (
+    <MealsList items={favoriteMeals} onPressHandler={onPressHandler} />
+  ) : (
     <View style={styles.container}>
-      <Text style={styles.title}>Your Favorites</Text>
-      <Text style={styles.message}>No favorites added yet!</Text>
+      <Text style={styles.text}>You have no favorite meals yet!</Text>
     </View>
   );
 }
@@ -14,17 +30,11 @@ export default FavoritesScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'white',
-  },
-  message: {
-    fontSize: 16,
-    color: 'white',
+  text: {
+    fontSize: 18,
+    color: "white",
   },
 });
